@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.css">
-    <title>Ateliê de Bolos  ::  Principal</title>
+    <title>Delicake Brasil  ::  Principal</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="img/favicon/favicon-32x32.png">
@@ -30,9 +30,9 @@
 
   <body style="min-width: 372px;">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger border-bottom shadow-sm mb-4">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top border-bottom shadow-sm mb-4">
         <div class="container">
-            <a class="navbar-brand" href="index.php"><strong>Ateliê de Bolos</strong></a>
+            <a class="navbar-brand" href="index.php"><strong>Delicake Brasil</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-expanded="false" aria-controls="menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -42,14 +42,11 @@
                         <a href="index.php" class="nav-link text-white">Principal</a>
                     </li>
                     <li class="nav-item">
-                        <a href="contato.html" class="nav-link text-white">Contato</a>
+                        <a href="contato/contato.php" class="nav-link text-white">Contato</a>
                     </li>
                 </ul>
                 <div class="align-self-end">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-white">Quero me cadastrar</a>
-                        </li>
                         <li class="nav-item">
                             <a href="funcionario/login.php" class="nav-link text-white">Entrar</a>
                         </li>
@@ -58,6 +55,10 @@
             </div>
         </div>
     </nav>
+
+    <div style="height:70px;" class="d-block d-md-none"></div>
+    <div style="height:110px;" class="d-none d-md-block d-lg-none"></div>
+    <div style="height:80px;" class="d-none d-lg-block"></div>
 
     <header class="container">
         <div id="carouselMain" class="carousel carousel-dark slide" data-bs-ride="carousel">
@@ -94,7 +95,7 @@
     </header>
 
     <main>
-        <div class="container">
+        <div class="container mb-3">
             <form method="get">
                 <div class="row">
                     <div class="col-12">
@@ -117,6 +118,8 @@
         header('Content-type: text/html; charset=utf-8');
                         
         include 'conn.php';
+
+        mysqli_set_charset($conn,"utf8");
 
         $busca = $_GET["busca"];
 
@@ -145,7 +148,7 @@
 
                 echo '<div class="col-xl-2 col-lg-3 col-md-4 col-sm-6 d-flex align-items-stretch">'.
                         '<div class="card text-center bg-light">'.
-                            '<img src='.$arquivo.' class="card-img-top">'.
+                            '<img width="150px" src='.$arquivo.' class="card-img-top">'.
                             '<div class="card-header">'.
                                 'R$'.$valor.',00'.
                             '</div>'.
@@ -157,12 +160,13 @@
                                 '</p>'.
                             '</div>'.
                             '<div class="card-footer">'.
-                                '<form class="d-block">'.
+                                '<form class="d-block" method="get" action="funcionario/crud_pedidos/create/create.php">'.
+                                    '<input type="hidden" id="fotoBolo" name="fotoBolo" value="'.$foto.'">'.
                                     '<button class="btn btn-danger">'.
                                         'Quero esse!'.
                                     '</button>'.
                                 '</form>'.
-                                '<small class="text-success">'.$fatias.' fatias</small>'.
+                                '<small class="text-warning">'.$fatias.' fatias</small>'.
                             '</div>'.
                     '</div>'.
                     '</div>';
@@ -205,12 +209,13 @@
                                 '</p>'.
                             '</div>'.
                             '<div class="card-footer">'.
-                                '<form class="d-block">'.
+                                '<form class="d-block" method="get" action="funcionario/crud_pedidos/create/create.php">'.
+                                    '<input type="hidden" id="fotoBolo" name="fotoBolo" value="'.$foto.'">'.
                                     '<button class="btn btn-danger">'.
                                         'Quero esse!'.
                                     '</button>'.
                                 '</form>'.
-                                '<small class="text-success">'.$fatias.' fatias</small>'.
+                                '<small class="text-warning">'.$fatias.' fatias</small>'.
                             '</div>'.
                     '</div>'.
                     '</div>';
@@ -226,7 +231,7 @@
         </div>
     </main>
 
-    <div style="height:277px;" class="d-block d-md-none"></div>
+    <div style="height:300px;" class="d-block d-md-none"></div>
     <div style="height:153px;" class="d-none d-md-block d-lg-none"></div>
     <div style="height:129px;" class="d-none d-lg-block"></div>
 
@@ -234,7 +239,7 @@
         <div class="container">
             <div class="row py-3">
                 <div class="col-12 col-md-4 text-center text-md-left">
-                    &copy; 2022 - Ateliê de Bolos<br>
+                    &copy; 2022 - Delicake Brasil<br>
                     Rua Virtual Inexistente, 171, Compulândia/PC <br>
                     CNPJ 99.999.999/0001-99
                 </div>
@@ -245,11 +250,11 @@
                     <a href="trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-right">
-                    <a href="contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
+                    <a href="contato/contato.php" class="text-decoration-none text-dark">Contato pelo site</a><br>
                     Email:
-                        <a href="mailto:email@dominio.com" class="text-decoration-none text-dark">email@dominio.com</a><br>
+                        <a href="mailto:delicakebrasil@gmail.com" class="text-decoration-none text-dark">delicakebrasil@gmail.com</a><br>
                     Telefone:
-                        <a href="phone:28999990000" class="text-decoration-none text-dark">(28) 99999-0000</a>
+                        <a href="phone:85985348222" class="text-decoration-none text-dark">(85) 98534-8222</a>
                 </div>
             </div>
         </div>

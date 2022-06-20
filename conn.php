@@ -1,4 +1,7 @@
 <?php
+
+    header('Content-type: text/html; charset=utf-8');
+    
     $servername = "sql306.epizy.com";
     $username = "epiz_31234996";
     $password = "wGxoKss8vb494m";

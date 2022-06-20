@@ -33,7 +33,12 @@
 
     $caminho = "../../../img/produtos/";
 
+    mysqli_set_charset($conn,"utf8");
+
+
     $target_file = $caminho . basename($_FILES["foto"]["name"]);
+
+    mysqli_set_charset($conn,"utf8");
 
     $imagem = basename($_FILES["foto"]["name"]);
 
@@ -67,13 +72,13 @@
         $resize_tamanho->resizeImage(300, 400, 'crop');
 
         if($imageFileType == "png"){
-            $foto = "catalogo-" . $titulo . ".png";
+            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".png";
         }
         else if($imageFileType == "jpg"){
-            $foto = "catalogo-" . $titulo . ".jpg";
+            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpg";
         }
         else if($imageFileType == "jpeg"){
-            $foto = "catalogo-" . $titulo . ".jpeg";
+            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpeg";
         }
 
         $foto = str_replace(' ', '-', $foto);

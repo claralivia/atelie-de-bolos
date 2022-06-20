@@ -8,7 +8,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.css">
-    <title>Ateliê de Bolos  ::  Login</title>
+    <title>Delicake Brasil  ::  Login</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="../img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../img/favicon/favicon-32x32.png">
@@ -22,6 +22,8 @@
 
   </head>
 
+  <script src='https://www.google.com/recaptcha/api.js'></script>
+
   <script>
     function verificar(){
         var email = document.querySelector('#email').value;
@@ -33,6 +35,10 @@
         else if(senha === ''){
             alert("Campo SENHA em branco.");
         }
+        else if((grecaptcha.getResponse() === "")){
+            alert("Recapctha em branco!");
+            event.preventDefault();
+        }
         else{
             document.getElementById("login").setAttribute("method","post");
             document.getElementById("login").setAttribute("action","table_funcionario.php");
@@ -43,9 +49,9 @@
 
   <body style="min-width: 372px;">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger border-bottom shadow-sm mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top border-bottom shadow-sm mb-3">
         <div class="container">
-            <a class="navbar-brand" href="../index.php"><strong>Ateliê de Bolos</strong></a>
+            <a class="navbar-brand" href="../index.php"><strong>Delicake Brasil</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-expanded="false" aria-controls="menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -55,14 +61,11 @@
                         <a href="../index.php" class="nav-link text-white">Principal</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../contato.html" class="nav-link text-white">Contato</a>
+                        <a href="../contato/contato.php" class="nav-link text-white">Contato</a>
                     </li>
                 </ul>
                 <div class="align-self-end">
                     <ul class="navbar-nav">
-                        <li class="nav-item">
-                            <a href="#" class="nav-link text-white">Quero me cadastrar</a>
-                        </li>
                         <li class="nav-item">
                             <a href="login.php" class="nav-link text-white">Entrar</a>
                         </li>
@@ -72,6 +75,9 @@
         </div>
     </nav>
 
+        <div style="height:70px;" class="d-block d-md-none"></div>
+        <div style="height:110px;" class="d-none d-md-block d-lg-none"></div>
+        <div style="height:80px;" class="d-none d-lg-block"></div>
 
     <main>
         <div class="container">
@@ -115,9 +121,9 @@
                         <h1 class="mb-3">Login do Funcionário</h1>
                         <hr class="mt-3">
                         <?php
-                            if(isset($_SESSION['msg'])){
-                                echo $_SESSION['msg'];
-                                unset($_SESSION['msg']);
+                            if(isset($_SESSION['msgLogin'])){
+                                echo $_SESSION['msgLogin'];
+                                unset($_SESSION['msgLogin']);
                             }
                         ?>
                         <div class="form-floating mb-3">
@@ -130,6 +136,8 @@
                             <label for="senha">Senha</label>
                         </div>
 
+                        <div class="g-recaptcha mb-3" data-sitekey="6LfKeoUgAAAAAH0M2JJ3lzsspqWxzcgZ6HDrBXv3"></div>
+
                         <button class="btn btn-lg btn-danger" type="submit" onclick="verificar()">
                             Login
                         </button>
@@ -138,7 +146,7 @@
             </div>
         </div>
 
-        <div class="container">
+        <div class="container mb-3">
             <hr class="mt-3">
             <div id="carouselMain" class="carousel carousel-dark slide" data-bs-ride="carousel">
                 <div class="carousel-indicators">
@@ -182,7 +190,7 @@
         <div class="container">
             <div class="row py-3">
                 <div class="col-12 col-md-4 text-center text-md-left">
-                    &copy; 2022 - Ateliê de Bolos<br>
+                    &copy; 2022 - Delicake Brasil<br>
                     Rua Virtual Inexistente, 171, Compulândia/PC <br>
                     CNPJ 99.999.999/0001-99
                 </div>
@@ -195,9 +203,9 @@
                 <div class="col-12 col-md-4 text-center text-md-right">
                     <a href="../contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
                     Email:
-                        <a href="mailto:email@dominio.com" class="text-decoration-none text-dark">email@dominio.com</a><br>
+                        <a href="mailto:delicakebrasil@gmail.com" class="text-decoration-none text-dark">delicakebrasil@gmail.com</a><br>
                     Telefone:
-                        <a href="phone:28999990000" class="text-decoration-none text-dark">(28) 99999-0000</a>
+                        <a href="phone:85985348222" class="text-decoration-none text-dark">(85) 98534-8222</a>
                 </div>
             </div>
         </div>

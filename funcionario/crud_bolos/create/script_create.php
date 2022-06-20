@@ -6,6 +6,8 @@
                 
             include '../../../conn.php';
 
+            mysqli_set_charset($conn,"utf8");
+
             session_start();
 
             $caminho = "../../../img/produtos/"; 
@@ -22,7 +24,7 @@
             }
 
             if(isset($_POST["submit"])) {
-            $check = getimagesize($_FILES["foto"]["tmp_name"]);
+                $check = getimagesize($_FILES["foto"]["tmp_name"]);
             if($check !== false) {
                 echo "Arquivo é uma imagem - " . $check["mime"] . ".";
             } else {
@@ -46,27 +48,7 @@
             }
 
             else if (move_uploaded_file($_FILES['foto']['tmp_name'], $target_file)) {
-            
-                    $resize_tamanho = new resize($target_file);
-                        
-                    $resize_tamanho->resizeImage(300, 400, 'crop');
-
-                    if($imageFileType == "png"){
-                        $foto = "catalogo-" . $titulo . ".png";
-                    }
-                    else if($imageFileType == "jpg"){
-                        $foto = "catalogo-" . $titulo . ".jpg";
-                    }
-                    else if($imageFileType == "jpeg"){
-                        $foto = "catalogo-" . $titulo . ".jpeg";
-                    }
-
-                    $foto = str_replace(' ', '-', $foto);
-                    $foto = mb_strtolower ($foto,"utf-8");
-                        
-                    $resize_tamanho->saveImage($caminho . $foto, 100);
-                        
-                    unlink($caminho . $imagem);
+                    $imagem = basename($_FILES["foto"]["name"]);
             }
 
             if(isset($_POST['valor'])){
@@ -94,13 +76,65 @@
             $stmt_prepared_okay = mysqli_stmt_prepare($stmt,$sql);
 
             if($stmt_prepared_okay){
-                mysqli_stmt_bind_param($stmt, "sssssss", $foto, $titulo, $descricao, $valor, $fatias, $data, $categoria);
-
+                mysqli_stmt_bind_param($stmt, "sssssss", $imagem, $titulo, $descricao, $valor, $fatias, $data, $categoria);
 
                 $stmt_executed_okay = mysqli_stmt_execute($stmt);     
 
                 if ($stmt_executed_okay) {
-                    header('Location: '."../read.php");  
+
+                    $sql2 = "SELECT * FROM bolos WHERE foto = '".$imagem."'";
+
+                    $result = mysqli_query($conn, $sql2);
+
+                    while($row = mysqli_fetch_assoc($result)){
+                        $imagembd = $row["foto"];
+                        
+                        if ($imagembd = $imagem){
+                            $idBolo = $row["idBolo"];
+                        }
+                    }
+
+                    mysqli_free_result($result);
+
+                    $target_file2 = "../../../img/produtos/" . $imagembd;
+
+                    $imageFileType2 = strtolower(pathinfo($target_file2,PATHINFO_EXTENSION));
+
+                    $resize_tamanho = new resize($target_file2);
+                        
+                    $resize_tamanho->resizeImage(300, 400, 'crop');
+
+                    if($imageFileType2 == "png"){
+                        $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".png";
+                    }
+                    else if($imageFileType2 == "jpg"){
+                        $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpg";
+                    }
+                    else if($imageFileType2 == "jpeg"){
+                        $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpeg";
+                    }
+
+
+                    $foto = str_replace(' ', '-', $foto);
+                    $foto = mb_strtolower ($foto,"utf-8");
+                        
+                    $resize_tamanho->saveImage($caminho . $foto, 100);
+                        
+                    unlink($target_file2);
+
+                    $sqlUpdate = "UPDATE bolos SET foto=? WHERE idBolo =?";
+
+                    $stmt_prepared_okay2 = mysqli_stmt_prepare($stmt,$sqlUpdate);
+
+                    if ($stmt_prepared_okay2) {
+
+                        mysqli_stmt_bind_param($stmt, "si",$foto, $idBolo);
+
+                        $stmt_executed_okay2 = mysqli_stmt_execute($stmt);
+
+                        header('Location: '."../read.php");
+                    }
+  
                 } else {
                     echo "Não foi possível executar a inserção de ".
                         "$foto, $titulo, $descricao, $valor, $fatias, $data, $categoria no banco de dados". 

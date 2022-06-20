@@ -6,6 +6,8 @@
 
     include '../../../conn.php';
 
+    mysqli_set_charset($conn,"utf8");
+
     if(isset($_SESSION["idBolo"])){
         $idBolo = ($_SESSION["idBolo"]);
     }
