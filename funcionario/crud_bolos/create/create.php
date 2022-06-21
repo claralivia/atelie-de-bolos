@@ -155,7 +155,7 @@
                         <option value="Confeitado">Confeitado</option>
                     </select>
 
-                    <div class="g-recaptcha mb-3" data-sitekey="6LeSEE8gAAAAAHBUJxksEWvPl8XWbdAVy04sHgya"></div>
+                    <div class="g-recaptcha mb-3" data-sitekey="6LfKeoUgAAAAAH0M2JJ3lzsspqWxzcgZ6HDrBXv3"></div>
 
                     <button class="btn btn-lg btn-danger mb-3" type="submit">
                         Inserir

@@ -53,7 +53,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="../../../node_modules/bootstrap/dist/css/bootstrap.css">
-    <title>Delicake Brasil  ::  Atualização</title>
+    <title>Ateliê de Bolos  ::  Atualização</title>
 
     <link rel="apple-touch-icon" sizes="180x180" href="../../../img/favicon/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="../../../img/favicon/favicon-32x32.png">
@@ -118,9 +118,9 @@
 
   <body style="min-width: 372px;">
 
-    <nav class="navbar navbar-expand-lg navbar-dark bg-danger fixed-top border-bottom shadow-sm mb-3">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-danger border-bottom shadow-sm mb-3">
         <div class="container">
-            <a class="navbar-brand" href="../../../index.php"><strong>Delicake Brasil</strong></a>
+            <a class="navbar-brand" href="../../../index.php"><strong>Ateliê de Bolos</strong></a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menu" aria-expanded="false" aria-controls="menu">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -130,13 +130,16 @@
                         <a href="../../../index.php" class="nav-link text-white">Principal</a>
                     </li>
                     <li class="nav-item">
-                        <a href="../../../contato/contato.php" class="nav-link text-white">Contato</a>
+                        <a href="../../../contato.html" class="nav-link text-white">Contato</a>
                     </li>
                 </ul>
                 <div class="align-self-end">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="../../../index.php" class="nav-link text-warning">Sair</a>
+                            <a href="#" class="nav-link text-white">Quero me cadastrar</a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="../../login.php" class="nav-link text-white">Entrar</a>
                         </li>
                     </ul>
                 </div>
@@ -144,9 +147,6 @@
         </div>
     </nav>
 
-        <div style="height:70px;" class="d-block d-md-none"></div>
-        <div style="height:110px;" class="d-none d-md-block d-lg-none"></div>
-        <div style="height:80px;" class="d-none d-lg-block"></div>
 
     <main>
         <div class="container">
@@ -271,7 +271,7 @@
         <div class="container">
             <div class="row py-3">
                 <div class="col-12 col-md-4 text-center text-md-left">
-                    &copy; 2022 - Delicake Brasil<br>
+                    &copy; 2022 - Ateliê de Bolos<br>
                     Rua Virtual Inexistente, 171, Compulândia/PC <br>
                     CNPJ 99.999.999/0001-99
                 </div>
@@ -282,16 +282,16 @@
                     <a href="../../../trocas.html" class="text-decoration-none text-dark">Trocas e Devoluções</a>
                 </div>
                 <div class="col-12 col-md-4 text-center text-md-right">
-                    <a href="../../../contato/contato.php" class="text-decoration-none text-dark">Contato pelo site</a><br>
+                    <a href="../../../contato.html" class="text-decoration-none text-dark">Contato pelo site</a><br>
                     Email:
-                        <a href="mailto:delicakebrasil@gmail.com" class="text-decoration-none text-dark">delicakebrasil@gmail.com</a><br>
+                        <a href="mailto:email@dominio.com" class="text-decoration-none text-dark">email@dominio.com</a><br>
                     Telefone:
-                        <a href="phone:85985348222" class="text-decoration-none text-dark">(85) 98534-8222</a>
+                        <a href="phone:28999990000" class="text-decoration-none text-dark">(28) 99999-0000</a>
                 </div>
             </div>
         </div>
     </footer>
     
-    <script src="../../../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
+    <script src="../node_modules/bootstrap/dist/js/bootstrap.bundle.js"></script>
   </body>
 </html>

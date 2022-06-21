@@ -75,7 +75,7 @@
 <?php
     session_start();
 
-    mysqli_set_charset($conn,"utf8");
+    header('Content-type: text/html; charset=utf-8');
     
     if(isset($_GET["idBolo"])){
         $_SESSION["idBolo"] = $_GET["idBolo"];
@@ -107,7 +107,7 @@
     echo'<main>'.
             '<div class="container">'.
                 '<div class="row justify-content-center">'.
-                    '<form class="col-sm-10 col-md-8 col-lg-6" enctype="multipart/form-data" id="update">'.
+                    '<form class="col-sm-10 col-md-8 col-lg-6" enctype="multipart/form-data" id="update" onsubmit="verificar()">'.
                         '<h1 class="mb-3">Atualizar Foto:</h1>'.
                         '<hr class = "mt-3">';
                             if(isset($_SESSION['msg'])){
@@ -120,7 +120,7 @@
                         '</div>'.
 
                         '<div class="text-center mb-3">'.
-                            '<div class="g-recaptcha" data-sitekey="6LeSEE8gAAAAAHBUJxksEWvPl8XWbdAVy04sHgya"></div>'.
+                            '<div class="g-recaptcha" data-sitekey="6LfKeoUgAAAAAH0M2JJ3lzsspqWxzcgZ6HDrBXv3"></div>'.
                         '</div>'.
 
                         '<div class="text-center mb-3">'.

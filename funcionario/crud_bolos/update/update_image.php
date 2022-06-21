@@ -31,85 +31,96 @@
         $imagem_anterior = $_SESSION["fotoAnt"];
     }
 
-    $caminho = "../../../img/produtos/";
-
-    mysqli_set_charset($conn,"utf8");
-
-
-    $target_file = $caminho . basename($_FILES["foto"]["name"]);
-
-    mysqli_set_charset($conn,"utf8");
-
-    $imagem = basename($_FILES["foto"]["name"]);
-
-    $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
-
-    unlink($caminho . $imagem_anterior);
-
-    if (file_exists($target_file)) {
-        $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente o arquivo já existe.</div></div>";
-        header('Location: '."script_update_image.php");
+    if (isset($_POST['g-recaptcha-response'])) {
+        $captcha_data = $_POST['g-recaptcha-response'];
     }
 
-    else if ($_FILES["foto"]["size"] > 2000000) {
-        $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente o arquivo ultrapassa 2Mb.</div></div>";
-        header('Location: '."script_update_image.php");
+    if (!$captcha_data) {
+        $_SESSION['msgLogin'] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Por favor, preencha o captcha.</div></div>";
+        header('Location: '."login.php");
     }
 
-    else if($imageFileType != "png" && $imageFileType != "jpg" && $imageFileType != "jpeg") {
-        $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente, apenas PNG, JPG e JPEG são possíveis.</div></div>";
-        header('Location: '."script_update_image.php");
-    }
+    $resposta = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=6LfKeoUgAAAAAEFbI_DDnIsYg8bZtw4k8p8SbUW_&response=".$captcha_data."&remoteip=".$_SERVER['REMOTE_ADDR']);
 
-    else if (move_uploaded_file($_FILES['foto']['tmp_name'], $target_file)) {
+    if ($resposta.success) {
 
-        header('Content-type: text/html; charset=utf-8');
+        $caminho = "../../../img/produtos/";
 
-        include '../../../conn.php';
+        $target_file = $caminho . basename($_FILES["foto"]["name"]);
 
-        $resize_tamanho = new resize($target_file);
-            
-        $resize_tamanho->resizeImage(300, 400, 'crop');
+        $imagem = basename($_FILES["foto"]["name"]);
 
-        if($imageFileType == "png"){
-            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".png";
-        }
-        else if($imageFileType == "jpg"){
-            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpg";
-        }
-        else if($imageFileType == "jpeg"){
-            $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpeg";
+        $imageFileType = strtolower(pathinfo($target_file,PATHINFO_EXTENSION));
+
+        unlink($caminho . $imagem_anterior);
+
+        if (file_exists($target_file)) {
+            $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente o arquivo já existe.</div></div>";
+            header('Location: '."script_update_image.php");
         }
 
-        $foto = str_replace(' ', '-', $foto);
-        $foto = mb_strtolower ($foto,"utf-8");
-            
-        $resize_tamanho->saveImage($caminho . $foto, 100);
-            
-        unlink($caminho . $imagem);
+        else if ($_FILES["foto"]["size"] > 2000000) {
+            $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente o arquivo ultrapassa 2Mb.</div></div>";
+            header('Location: '."script_update_image.php");
+        }
 
-        $sql = "UPDATE bolos SET foto=?, titulo=?, descricao=?, valor=?, fatias=?, categoria=? WHERE idBolo =?";
+        else if($imageFileType != "png" && $imageFileType != "jpg" && $imageFileType != "jpeg") {
+            $_SESSION["msg"] = "<div class='form-floating mb-3'><div class= 'alert alert-danger'>Infelizmente, apenas PNG, JPG e JPEG são possíveis.</div></div>";
+            header('Location: '."script_update_image.php");
+        }
 
-        $stmt = mysqli_stmt_init($conn);
-        $stmt_prepared_okay = mysqli_stmt_prepare($stmt,$sql);
+        else if (move_uploaded_file($_FILES['foto']['tmp_name'], $target_file)) {
 
-        if ($stmt_prepared_okay) {
+            header('Content-type: text/html; charset=utf-8');
 
-            mysqli_stmt_bind_param($stmt, "ssssssi", $foto, $titulo, $descricao, $valor, $fatias, $categoria, $idBolo);
+            include '../../../conn.php';
 
-            $stmt_executed_okay = mysqli_stmt_execute($stmt);
+            mysqli_set_charset($conn,"utf8");
 
-            if ($stmt_executed_okay) {
-                header('Location: '."../read.php");
-            } else {
-                echo "Não foi possível executar a atualização de ".
-                    "$idBolo $foto $titulo $descricao $valor $fatias $categoria no banco de dados" . 
-                    mysqli_error($conn);
-                exit;
+            $resize_tamanho = new resize($target_file);
+                
+            $resize_tamanho->resizeImage(300, 400, 'crop');
+
+            if($imageFileType == "png"){
+                $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".png";
             }
-            mysqli_stmt_close($stmt);
+            else if($imageFileType == "jpg"){
+                $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpg";
+            }
+            else if($imageFileType == "jpeg"){
+                $foto = "catalogo-" . $titulo . "-id" . $idBolo . ".jpeg";
+            }
+
+            $foto = str_replace(' ', '-', $foto);
+            $foto = mb_strtolower ($foto,"utf-8");
+                
+            $resize_tamanho->saveImage($caminho . $foto, 100);
+                
+            unlink($caminho . $imagem);
+
+            $sql = "UPDATE bolos SET foto=?, titulo=?, descricao=?, valor=?, fatias=?, categoria=? WHERE idBolo =?";
+
+            $stmt = mysqli_stmt_init($conn);
+            $stmt_prepared_okay = mysqli_stmt_prepare($stmt,$sql);
+
+            if ($stmt_prepared_okay) {
+
+                mysqli_stmt_bind_param($stmt, "ssssssi", $foto, $titulo, $descricao, $valor, $fatias, $categoria, $idBolo);
+
+                $stmt_executed_okay = mysqli_stmt_execute($stmt);
+
+                if ($stmt_executed_okay) {
+                    header('Location: '."../read.php");
+                } else {
+                    echo "Não foi possível executar a atualização de ".
+                        "$idBolo $foto $titulo $descricao $valor $fatias $categoria no banco de dados" . 
+                        mysqli_error($conn);
+                    exit;
+                }
+                mysqli_stmt_close($stmt);
+            }
+            mysqli_close($conn);
         }
-        mysqli_close($conn);
     }
 
 ?>

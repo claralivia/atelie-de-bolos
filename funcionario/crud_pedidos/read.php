@@ -170,8 +170,8 @@
                                                     '<td>'.$dataResposta.'</td>'.
                                                     '<td><a href="delete.php?idPedido='.$idPedido.'"><img width="20px" src="../assets/lixeira.png"></a></td>';
 
-                        if($status == "Não respondida"){
-                            echo '<td><a href="update.php?idPedido='.$idPedido.'">Sim</a></td>';
+                        if($status !== "Respondida no email e whatsapp"){
+                            echo '<td><a href="update/update.php?idPedido='.$idPedido.'">Sim</a></td>';
                         }
                         else{
                             echo '<td>Indisponível</td>';
@@ -256,8 +256,8 @@
                                                     '<td>'.$dataResposta.'</td>'.
                                                     '<td><a href="delete.php?idPedido='.$idPedido.'"><img width="20px" src="../assets/lixeira.png"></a></td>';
 
-                        if($status == "Não respondida"){
-                            echo '<td><a href="update.php?idPedido='.$idPedido.'">Sim</a></td>';
+                        if($status !== "Respondida no email e whatsapp"){
+                            echo '<td><a href="update/update.php?idPedido='.$idPedido.'">Sim</a></td>';
                         }
                         else{
                             echo '<td>Indisponível</td>';
